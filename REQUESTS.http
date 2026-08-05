@@ -1,0 +1,8 @@
+@host = localhost:8080
+@token = super-secret-token
+
+### Testar se o servidor está de boas
+GET /health HTTP/1.1
+Host: {{host}}
+Accept: text/plain
+Authorization: Bearer {{token}}
