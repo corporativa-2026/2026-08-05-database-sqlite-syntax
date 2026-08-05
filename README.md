@@ -1,47 +1,71 @@
-# P3: HTTP request handling practice test
+# Database
 
-## Pressupostos:
+Banco de dados. Armazenamento, desde o início (50's, 60's), existem vários modelos (paradigmas), ex.: lote, arquivo, hierárquico, ..., RELACIONAL, se baseia em uma linguagem específica: SQL.
 
-1. Cada handler ou filter tem seu próprio arquivo (módulo);
-2. Cada handler ou filter tem seu próprio teste;
-3. O server não pode retornar erros 500, se acontecer, existe lógica não implementada;
+SQL, existe desde a década de 70. SQL é estável e estabelecida.
 
-## Tarefas:
+SQL é padronizada:
+https://blog.ansi.org/ansi/sql-standard-iso-iec-9075-2023-ansi-x3-135/
+https://en.wikipedia.org/wiki/SQL:1999
 
-1. Fazer os testes em [`server.health.test.js`](tests/server.health.test.js) passarem;
-2. Escrever testes para o `/now` na forma de `server.now.test.js;
-3. Implementar o endpoint `/cup` conforme [REQUESTS.http](REQUESTS.http);
-4. Escrever testes para o novo endpoint -- no mesmo padrão dos endpoints anteriores;
-5. Corrigir quaisquer erros que encontrar no código.
+Mas os fabricantes/distribuidores fazer versões "customizadas".
 
-## Resultados:
+Structured
+Query
+Language
+Linguagem de Consulta Estruturada
 
-1. As tarefas podem ser realizadas em qualquer ordem;
-2. _Warnings_ do linter decrescem a grade, mesmo que já tenha vindo assim;
-3. Enviar apenas as pastas filters, handlers, tests, e web.
+A sintaxe tem diferenças entre bancos, ex.: MySQL (MariaDB), PostgreSQL, Oracle (~10K USD/Mo), IBM DB2, Microsoft SQL Server, etc.
 
-## Referências:
+Self-hosting: hospedar o próprio servidor de banco.
+Managed-hosting: pago mensalmente e hospedado na "nuvem" -- _fog computing_, ex.: AWS RDS, Azure Database, Supabase, ...
+Embedded/in-process database: o motor (engine) do banco roda junto com a aplicação (Node, Python, PHP, ..), ex.: SQL Server CE, Hypersonic Database, Derby Database, **sqlite**.
 
-1930 - Yugoslavia (group stage)
-1934 - Spain (round of 16)
-1938 - Italy (semi-finals)
-1950 - Uruguay (final stage - “Maracanazo”)
-1954 - Hungary (quarter-finals)
-1958 - Won (against Sweden)
-1962 - Won (against Czechoslovakia)
-1966 - Portugal (group stage)
-1970 - Won (against Italy)
-1974 - Netherlands (second group stage)
-1978 - Argentina (second group stage)
-1982 - Italy (second group stage)
-1986 - France (quarter-finals, penalties)
-1990 - Argentina (round of 16)
-1994 - Won (against Italy)
-1998 - France (final)
-2002 - Won (against Germany)
-2006 - France (quarter-finals)
-2010 - Netherlands (quarter-finals)
-2014 - Germany (semi-finals)
-2018 - Belgium (quarter-finals)
-2022 - Croatia (quarter-finals, penalties)
-2026 - Norway (round of 16)
+História do SQLite:
+https://www.youtube.com/watch?v=5zQdYx-fqJg
+
+sqlite3
+
+No Windows:
+- abre o prompt de comando
+- executa: `winget install SQLite.SQLite`
+- fecha o prompt
+- abre um prompt novo
+- executa: `sqlite3`
+
+Banco de dados dinâmico em oposição ao estrito, ex.:
+É possível salvar em uma coluna texto um valor numérico.
+Ex, uma coluna `nome VARCHAR(50)` (vira uma coluna `TEXT`) o comprimento não é respeitado.
+
+SQLite tem tipagem dinâmica com poucos tipos:
+https://www.sqlite.org/datatype3.html
+
+Mas a sintaxe vinda de MySQL e PostgreSQL, por exemplo, é aceita.
+
+```
+sqlite> .tables
+sqlite> create table usuario (nome text);
+sqlite> .tables
+usuario
+sqlite> .schema usuario
+CREATE TABLE usuario (nome text);
+sqlite> select * from usuario;
+sqlite> insert into usuario (nome) values ('Waldemar');
+sqlite> select * from usuario;
+Waldemar
+sqlite> .mode box
+sqlite> select * from usuario;
+```
+
+Criar um banco persistente:
+
+```
+> sqlite3 info.db
+SQLite version 3.45.1 2024-01-30 16:01:20
+Enter ".help" for usage hints.
+sqlite> .open nada.db
+sqlite> .open info.db
+sqlite> create table usuario (nome text);
+sqlite> insert into usuario (nome) values ('Thiago');
+sqlite> .exit
+```
