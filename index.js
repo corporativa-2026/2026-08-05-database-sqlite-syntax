@@ -3,6 +3,7 @@ import { startServer, registerHandler, registerFilter } from './web/server.js';
 import health from './handlers/health.js';
 import log from './filters/log.js';
 import auth from './filters/auth.js';
+import { create } from './handlers/desenvolvedor.js';
 
 registerFilter(log);
 registerFilter(auth, 'authentication');
@@ -12,6 +13,12 @@ registerHandler({
   path: '/health',
   accept: ['text/plain', 'application/json', 'application/xml', 'text/html'],
 }, health);
+
+registerHandler({
+  method: 'POST',
+  path: '/api/v1/desenvolvedor',
+  accept: ['application/json'],
+}, create);
 
 const port = 8080;
 
